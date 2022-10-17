@@ -24,5 +24,7 @@ executable pushover-cli
     build-depends:    base ^>=4.15.1.0
                     , pushover == 0.1.0.0
                     , text
+                    , unliftio
+                    , optparse-applicative
     hs-source-dirs:   app
     default-language: Haskell2010
