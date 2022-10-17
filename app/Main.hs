@@ -7,7 +7,7 @@ import Network.Pushover.Token
 import qualified Data.Text as T
 import Data.Text (Text)
 import System.Environment
-import Data.Maybe
+import Data.Maybe()
 import UnliftIO.Exception
 import Options.Applicative
 
@@ -38,13 +38,15 @@ main :: IO ()
 main = do
   let opts = info (cli <**> helper)
                ( fullDesc
-               <> progDesc "Send message to pushover"
-               <> header "pushove message from cli" )
+               <> progDesc ("Send message over pushover. The API Token and User Key should be passed "
+                           <> "as envrionment variables PS_API_TOKEN and PS_USER_KEY")
+               <> header "Pushover CLI Client" )
 
-  apiToken <- readAPIKey "PS_API_TOKEN"
-  userKey <- readAPIKey "PS_USER_KEY"
+  c <- execParser opts
+  at <- readAPIKey "PS_API_TOKEN"
+  uk <- readAPIKey "PS_USER_KEY"
 
-  (pSendMessage apiToken userKey) =<< execParser opts
+  pSendMessage at uk c
 
 pSendMessage :: Text -> Text -> CLI -> IO ()
 pSendMessage api user opts = do
